@@ -1,10 +1,18 @@
-FROM python:3.11
+FROM python:3.11-slim
 
-RUN mkdir /app
+# Install system SSL dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    openssl \
+    && update-ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
-COPY . /app
+COPY . .
 
-RUN pip install -r requirements.txt
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
 ENTRYPOINT ["python3", "-u", "main.py"]
-CMD []
