@@ -16,7 +16,7 @@ TEST_MODE = False
 LOG_LEVEL = logging.INFO
 
 # Logfile path (Set to None to disable file logging)
-LOG_FILE  = None #'log.txt'
+LOG_FILE  = 'log.txt'
 
 # Format of single logmessage
 LOG_FORMAT='[%(levelname)s] %(asctime)s %(message)s'
@@ -39,8 +39,8 @@ def get_value_from_config(path):
 		for prop in path:
 			if len(prop) == 0:
 				continue
-			if prop.isdigit():
-				prop = int(prop)
+			# if prop.isdigit():
+			# 	prop = int(prop)
 			data = data[prop]
 	return data
 
@@ -71,6 +71,7 @@ def get_html_from_saga():
 	url = "https://www.saga.hamburg/immobiliensuche?Kategorie=APARTMENT"
 	try:
 		resp = requests.get(url, headers=HTTP_HDRS)
+		print("Requesting " + url + "...")
 		if resp.status_code != 200:
 			logging.warning("Error receiving data from saga!")
 			logging.warning(">> " + str(resp.status_code) + " "\
@@ -112,6 +113,7 @@ def post_offer_to_telegram(offer_details, chat_id):
 	n = 0
 	for msg in [details_to_str(offer_details), offer_details.get("link")]:
 		print(". sending [" + msg + "] ...")
+		print(". sending [" + chat_id)
 		n += 1
 		send_msg_to_telegram(msg, chat_id)
 	logging.info(f"Sent {n} offers to group chat {chat_id}")
@@ -125,6 +127,7 @@ def send_msg_to_telegram(msg, chat_id):
 	msg = 'https://api.telegram.org/bot' + token\
 		 + '/sendMessage?chat_id=' + chat_id\
 		 + '&parse_mode=Markdown&text=' + msg
+	print("Sending message to telegram: " + msg)
 	try:
 		resp = requests.get(msg)
 		if resp.status_code != 200:
@@ -132,11 +135,13 @@ def send_msg_to_telegram(msg, chat_id):
 			logging.error(">> " + str(resp.status_code)\
 				+ " " + resp.text)
 			logging.error(">> Sent msg: '" + msg + "'")
+			print("Error: " + str(resp.status_code) + " " + resp.text)
 
 	except requests.exceptions.RequestException as e:
 		logging.error("Could not forward to telegram api")
 		logging.error(">> Error: " + str(e))
 		logging.error(">> Sent msg: '" + msg + "'")
+		print("Error: " + str(e))
 
 
 def is_offer_known(offer: str):
@@ -227,6 +232,9 @@ def get_offer_details(url:str) -> dict:
 	if not details["zipcode"]:
 		logging.warning("Failed to get zipcode for offer: " + url)
 
+	print("details")
+	print(details)
+	print("details")
 	return details
 
 
@@ -237,11 +245,12 @@ def offers_that_match_criteria(links_to_all_offers, chat_id) -> List[str]:
 
 	# get only offers of matching category (e.g. "apartments")
 	offers = links_to_all_offers.get(criteria.get("category", "apartments"), [])
-
+	print(offers)
+	print("offers")
 	for offer_link in offers:
 		if is_offer_known(offer_link):
 			continue
-
+		print("Checking offer: " + offer_link)
 		logging.debug("New offer: " + offer_link)
 		offer_details = get_offer_details(offer_link)
 

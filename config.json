@@ -1,0 +1,15 @@
+{
+  "chats": {
+    "7739842458": {
+      "telegram_token": "7889203319:AAEdKRZRFs2nOSTYf-OAWI_4P8405lgvCTw",
+      "debug_group": false,
+      "criteria": {
+        "category": "apartments",
+        "min_rooms": 2,
+        "rent_from": 100,
+        "rent_until": 950,
+        "zipcode_whitelist": false
+      }
+    }
+  }
+}
