@@ -21,6 +21,17 @@
         "rent_until": 2000,
         "zipcode_whitelist": [22041, 22043, 22083]
       }
+    },
+    "417178043": {
+      "telegram_token": "7889203319:AAHLmXwKLKD7reQv7VJ6DNRRl66wpZEoOQU",
+      "debug_group": false,
+      "criteria": {
+        "category": "apartments",
+        "min_rooms": 4,
+        "rent_from": 750,
+        "rent_until": 2000,
+        "zipcode_whitelist": [22041, 22043, 22083,20146, 22307, 22085, 20535, 22045]
+      }
     }
   }
 }
