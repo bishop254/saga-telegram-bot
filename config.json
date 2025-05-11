@@ -1,7 +1,7 @@
 {
   "chats": {
     "7739842458": {
-      "telegram_token": "7889203319:AAEdKRZRFs2nOSTYf-OAWI_4P8405lgvCTw",
+      "telegram_token": "7889203319:AAHLmXwKLKD7reQv7VJ6DNRRl66wpZEoOQU",
       "debug_group": false,
       "criteria": {
         "category": "apartments",
@@ -9,6 +9,17 @@
         "rent_from": 100,
         "rent_until": 950,
         "zipcode_whitelist": false
+      }
+    },
+    "8166350025": {
+      "telegram_token": "7889203319:AAHLmXwKLKD7reQv7VJ6DNRRl66wpZEoOQU",
+      "debug_group": false,
+      "criteria": {
+        "category": "apartments",
+        "min_rooms": 4,
+        "rent_from": 750,
+        "rent_until": 2000,
+        "zipcode_whitelist": [22041, 22043, 22083]
       }
     }
   }
